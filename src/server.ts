@@ -1,33 +1,29 @@
-import Fastify from "fastify";
-import FastifyWS from "@fastify/websocket";
-import { Executor } from "./game/simulator/executor.js";
+import ws from 'ws';
+import express from 'express';
+import { getConfig } from './config';
 
-const fastify = Fastify({ logger: false });
+const config = getConfig();
+const app = express();
 
-fastify.register(FastifyWS.default, {
-    options: {
-        maxPayload: 1048576
-    }
+const webSocketServer = new ws.Server({ noServer: true });
+
+webSocketServer.on('connection', (socket) => {
+    socket.on('message', (message) => {
+        console.log("Received:", message.toString('utf-8'));
+    });
 });
 
-const executor = new Executor();
+const server = app.listen(config.port, () => {
+    console.log(`Server started at: http://127.0.0.1:${config.port}`)
+    console.info(`Web socket server running on ws://127.0.0.1:${config.port}.`);
+});
 
-fastify.register(async () => {
-    fastify.get('/', { websocket: true }, (connection, request) => {
-        connection.socket.on('message', (message) => {
-            const json =  JSON.parse(message.toString());
-            executor.runScript(json.script);
-            connection.socket.send("DONE.");
-        });
+app.get('/', (request ,response) => {
+    response.send("OK.");
+});
+
+server.on('upgrade', (request, socket, head) => {
+    webSocketServer.handleUpgrade(request, socket, head, (socket) => {
+        webSocketServer.emit('connection', socket, request);
     });
-}); 
-
-
-fastify.listen({ port: 3000 }, (error, address) => {
-    if (error) {
-        fastify.log.error(error);
-        process.exit(1);
-    }
-
-    console.log(`Server listening on port 3000.`);
 });

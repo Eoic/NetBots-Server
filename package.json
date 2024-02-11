@@ -1,42 +1,30 @@
 {
   "name": "netbots-server",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "NetBots game server.",
-  "main": "server.js",
-  "type": "module",
   "scripts": {
-    "build": "tsc",
-    "start": "tsc --watch & nodemon dist/server.js"
+    "watch": "npx nodemon",
+    "build": "rimraf ./build && tsc",
+    "start": "npm run build && node build/server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Eoic/NetBots-Server.git"
-  },
-  "keywords": [
-    "bots",
-    "game",
-    "multiplayer",
-    "robots"
-  ],
-  "author": "Karolis Strazdas (Eoic)",
-  "license": "AGPL-3.0-or-later",
-  "bugs": {
-    "url": "https://github.com/Eoic/NetBots-Server/issues"
-  },
-  "homepage": "https://github.com/Eoic/NetBots-Server#readme",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/node": "^18.15.11",
     "@types/uuid": "^9.0.1",
     "@types/ws": "^8.5.4",
-    "typescript": "^4.9.5"
+    "nodemon": "^2.0.22",
+    "rimraf": "^4.4.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.3"
   },
   "dependencies": {
-    "@fastify/websocket": "^7.1.2",
-    "@types/node": "^18.14.5",
     "dotenv": "^16.0.3",
-    "fastify": "^4.14.0",
-    "fastify-esso": "^1.3.4",
-    "isolated-vm": "^4.4.2",
-    "nodemon": "^2.0.21",
-    "uuid": "^9.0.0"
+    "express": "^4.18.2",
+    "isolated-vm": "^4.5.0",
+    "uuid": "^9.0.0",
+    "ws": "^8.13.0"
   }
 }

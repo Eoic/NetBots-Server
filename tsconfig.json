@@ -4,9 +4,11 @@
         "moduleResolution": "nodenext",
         "target": "es2020",
         "sourceMap": true,
-        "outDir": "dist",
+        "outDir": "build",
         "strict": true,
         "noImplicitAny": true,
+        "rootDir": "src",
+        "resolveJsonModule": true,
         "typeRoots": ["./node_modules/@types", "./src/types"]
     },
     "include": ["src/**/*"],

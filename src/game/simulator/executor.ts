@@ -15,9 +15,8 @@ export class Executor {
 
     private setupJail() {
         this.jail.setSync('global', this.jail.derefInto());
-        this.jail.setSync('log', (...args: any[]) => console.log(...args));
         this.jail.setSync('move', (x: number, y: number) => {
-            this.context.global.set("position", { x, y });
+            // this.context.global.set("position", { x, y });
         });
     }
 
